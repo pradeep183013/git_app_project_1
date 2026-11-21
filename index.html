@@ -19,5 +19,59 @@
             </div>
         </form>
     </div>
+    <script>
+        const input = document.querySelector("input");
+        const form = document.querySelector("form");
+
+        let parsedMobileInfo = {
+            mobile : '',
+            isValid : false
+        }
+
+        function validateMobileNumber(number){
+
+            if(number.trim().length < 10){
+                parsedMobileInfo.isValid = false;
+            }
+
+            if(number.trim().length === 10){
+                parsedMobileInfo.isValid = true;
+            }
+
+            if(number.trim().length > 10){
+                input.value = parsedMobileInfo.mobile;
+                
+                return;
+            }
+
+           
+            const parsedNum = parseInt(number)
+
+            if(isNaN(parsedNum)){
+                return;
+            }
+
+            parsedMobileInfo.mobile = parsedNum.toString();
+            input.value = parsedNum;
+
+        }
+
+        input.addEventListener("keyup",(e)=>{
+            validateMobileNumber(e.target.value)
+        });
+
+        form.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            
+            console.log(parsedMobileInfo)
+            const message = parsedMobileInfo.isValid ? `Valid Mobile Number` : `Invalid Number. Found ${parsedMobileInfo.mobile.length ?? 0}/10.`
+
+            alert(message )
+
+            parsedMobileInfo.isValid = false;
+            parsedMobileInfo.mobile = ''
+
+        })
+    </script>
 </body>
 </html>
